@@ -1,15 +1,15 @@
 @extends('layouts.app')
-@section('title', 'บทความทั้งหมด')
+@section('title', 'สถานะของคำร้องทั้งหมด')
 @section('content')
     @if (count($blogs)>0)
-    <h2 class="text text-center py-2">บทความทั้งหมด</h2>
+    <h2 class="text text-center py-2">สถานะของคำร้องทั้งหมด</h2>
     <table class="table table-bordered text-center">
         <thead>
             <tr>
-                <th scope="col">ชื่อบทความ</th>
-                <th scope="col">สถานะ</th>
-                <th scope="col">แก้ไขบทความ</th>
-                <th scope="col">ลบบทความ</th>
+                <th scope="col">ชื่อคำร้อง</th>
+                <th scope="col">สถานะคำร้อง</th>
+                <th scope="col">แก้ไขคำร้อง</th>
+                <th scope="col">ลบคำร้อง</th>
             </tr>
         </thead>
         <tbody>
@@ -18,9 +18,9 @@
                     <td>{{$item->title}}</td>
                     <td>
                         @if ($item->status==true)
-                            <a href="{{route('change',$item->id)}}" class="btn btn-success">เผยแพร่</a>
+                            <a href="{{route('change',$item->id)}}" class="btn btn-success">ยืม</a>
                         @else
-                            <a href="{{route('change',$item->id)}}" class="btn btn-secondary">ฉบับร่าง</a>
+                            <a href="{{route('change',$item->id)}}" class="btn btn btn-outline-success">คืน</a>
                         @endif
                     </td>
                     <td><a href="{{route('edit',$item->id)}}" class="btn btn-warning">แก้ไข</a></td>

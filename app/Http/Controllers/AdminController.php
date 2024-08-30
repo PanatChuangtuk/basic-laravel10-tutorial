@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
 use App\Models\Blog;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -14,7 +15,7 @@ class AdminController extends Controller
     }
 
     function index(){
-        $blogs=Blog::paginate(5);
+        $blogs=Blog::paginate(10);
         return view('blog',compact('blogs'));
     }
     function create(){
@@ -35,7 +36,8 @@ class AdminController extends Controller
         );
         $data=[
             'title'=>$request->title,
-            'content'=>$request->content
+            'content'=>$request->content,
+            'created_at' => Carbon::now() 
         ];
         Blog::insert($data);
         return redirect('/author/blog');

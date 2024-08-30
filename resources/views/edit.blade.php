@@ -1,11 +1,11 @@
 @extends('layouts.app')
-@section('title', 'แก้ไขบทความ')
+@section('title', 'แก้ไขคำร้อง')
 @section('content')
-    <h2 class="text text-center py-2">แก้ไขบทความ</h2>
+    <h2 class="text text-center py-2">แก้ไขคำร้อง</h2>
     <form method="POST" action="{{route('update',$blog->id)}}">
         @csrf
         <div class="form-group">
-            <label for="title">ชื่อบทความ</label>
+            <label for="title">ชื่อคำร้อง</label>
             <input type="text" name="title" class="form-control" value="{{$blog->title}}">
         </div>
         @error('title')
@@ -14,7 +14,7 @@
             </div>
         @enderror
         <div class="form-group">
-            <label for="content">เนื้อหาบทความ</label>
+            <label for="content">เนื้อหาคำร้อง</label>
             <textarea name="content" cols="30" rows="5" class="form-control" id="content">{{$blog->content}}</textarea>
         </div>
         @error('content')
@@ -23,7 +23,7 @@
             </div>
         @enderror
         <input type="submit" value="อัปเดต" class="btn btn-primary my-3">
-        <a href="/author/blog" class="btn btn-success">บทความทั้งหมด</a>
+        <a href="/author/blog" class="btn btn-success">คำร้องทั้งหมด</a>
     </form>
     <script>
         ClassicEditor

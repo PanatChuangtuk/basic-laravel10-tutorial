@@ -13,8 +13,8 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <a href="/author/create">เขียนบทความ</a>
-                    <a href="/author/blog">บทความทั้งหมด</a>
+                    <a href="/author/create">สร้างคำร้อง</a>
+                    <a href="/author/blog">คำร้องทั้งหมด</a>
                 </div>
             </div>
         </div>
