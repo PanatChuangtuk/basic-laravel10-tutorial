@@ -17,3 +17,4 @@ class Blog extends Model
     ];
     protected $dates = ['deleted_at'];
 }
+?>
