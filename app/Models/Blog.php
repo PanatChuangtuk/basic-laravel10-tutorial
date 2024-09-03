@@ -13,6 +13,7 @@ class Blog extends Model
         'title',
         'content',
         'status',
+        'file'
       
     ];
     protected $dates = ['deleted_at'];

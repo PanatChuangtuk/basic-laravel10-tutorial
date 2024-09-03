@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('blogs', function (Blueprint $table) {
+        Schema::table('blogs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->text('content');
+            $table->text('file')->nullable()->change();;
             $table->boolean('status')->default(true);
             $table->timestamps();
-          
+            
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropSoftDeletes('blogs');
+        Schema::dropSoftDeletes();
     }
 };

@@ -11,6 +11,7 @@ class BlogFactory extends Factory
             'title'=>fake()->name(),
             'content'=>fake()->text(),
             'status'=>rand(0,1),
+            // 'file'=>fake()->imageUrl()
         ];
     }
 }
