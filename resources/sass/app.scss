@@ -1,8 +1,142 @@
 // Fonts
-@import url('https://fonts.bunny.net/css?family=Nunito');
+@import url("https://fonts.bunny.net/css?family=Nunito");
 
 // Variables
-@import 'variables';
+@import "variables";
 
 // Bootstrap
-@import 'bootstrap/scss/bootstrap';
+@import "bootstrap/scss/bootstrap";
+
+// Variables --------------------------------------------------
+
+$coverImageHeight: 350px;
+$additionalImageHeight: 220px;
+
+// Page styles ------------------------------------------------
+
+body {
+    background: #eaeeff;
+}
+
+h1 {
+    letter-spacing: -1px;
+}
+
+.container {
+    max-width: 650px;
+}
+
+.display-none {
+    display: none;
+}
+
+.preview-img {
+    height: 300px;
+    width: 100%;
+    margin-bottom: 30px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+// Dropzone styles ------------------------------------------------
+
+.dz-message {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border: 1px dashed #8b8f93;
+}
+
+.main-drag-area {
+    min-height: $coverImageHeight;
+    background: transparent;
+    border: 0;
+    &.dz-drag-hover {
+        background: $primary;
+        .dz-message {
+            display: flex !important;
+        }
+        .dz-previews-container {
+            opacity: 0.1;
+        }
+    }
+    &:hover {
+        .dz-message {
+            border-style: solid;
+            cursor: pointer;
+        }
+    }
+}
+
+.dz-additional-area {
+    height: $additionalImageHeight;
+    border: 1px dashed #8b8f93;
+    &:hover {
+        border-style: solid;
+        cursor: pointer;
+    }
+}
+
+.dz-remove-button {
+    background: rgba(0, 0, 0, 0.5);
+    width: 24px;
+    height: 24px;
+    border-radius: 100px;
+    padding: 5px;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 0;
+    right: 0;
+    &:hover {
+        background: rgba(0, 0, 0, 0.75);
+    }
+}
+
+// Sortable styles ------------------------------------------------
+
+.dz-previews-container {
+    transition: all 0.25s;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+    gap: 22px;
+    .dz-image-preview {
+        height: $additionalImageHeight;
+        border: 1px solid transparent;
+        &:first-child {
+            grid-column: 1 / -1;
+            height: $coverImageHeight;
+            position: relative;
+            &:after {
+                content: "Cover";
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: rgba(0, 0, 0, 0.5);
+                color: #fff;
+                padding: 8px 10px;
+                border-radius: 6px;
+                margin: 8px;
+                line-height: 0.9;
+            }
+        }
+    }
+}
+
+.sortable-placeholder {
+    background: #fff;
+    border: 1px dashed #8b8f93;
+    @extend .rounded-3;
+    &.cover-placeholder {
+        height: $coverImageHeight !important;
+        width: 100% !important;
+        grid-column: 1 / -1 !important;
+    }
+}

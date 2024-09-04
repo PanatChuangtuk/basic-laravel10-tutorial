@@ -36,11 +36,12 @@ class AdminController extends Controller
             ]
         );
         $filePaths = [];
-        foreach ($request->file('file') as $file) {
-            $filePath = $file->store('uploads', 'public'); 
+        $files = $request->file('file');
+        foreach ($files  as $file) {
+            $filePath = $file->store('file', 'public'); 
             $filePaths[] = basename($filePath); 
         }
-       
+     
         $data=[
             'title'=>$request->title,
             'content'=>strip_tags($request->input('content')),
@@ -88,15 +89,15 @@ class AdminController extends Controller
                 'file.required' => 'กรุณาใส่รูปภาพ'
             ]
         );
-       
+      
         if (is_array($oldFilePaths)) {
             foreach ($oldFilePaths as $file) {
-                Storage::disk('public')->delete('uploads/' . $file);
+                Storage::disk('public')->delete('file/' . $file);
             }
         }
         
        foreach ($request->file('file') as $file) {
-            $filePath = $file->store('uploads', 'public'); 
+            $filePath = $file->store('file', 'public'); 
             $filePaths[] = basename($filePath); 
         }
 
