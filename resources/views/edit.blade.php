@@ -3,11 +3,11 @@
 @section('content')
 
     <h2 class="text text-center py-2">แก้ไขคำร้อง</h2>
-    <form method="POST" action="{{route('update',$blog->id)}}"enctype="multipart/form-data">
+    <form id="dzImageUploadForms" method="POST" action="{{route('update',$blog->id)}}"enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="title">ชื่อคำร้อง</label>
-            <input type="text" name="title" class="form-control" value="{{$blog->title}}">
+            <input type="text" name="title"  id="title" class="form-control" value="{{$blog->title}}">
         </div>
         @error('title')
             <div class="my-2">
@@ -24,37 +24,82 @@
             </div>
         @enderror
         
-        <div class="form-group">
-            <input type="file" name="file[]"multiple class="form-control-file">
+        <div class="position-relative">
+            <div class="form-group mb-3">
+                <div class="main-drag-area form-control p-0" id="dzDropzoneUploads" >
+                    <div class="dz-message rounded-3 text-muted opacity-75" id="dzPlaceholder">
+                        <svg class="opacity-50 mb-3" width="50px" height="50px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                            <!-- SVG Path -->
+                        </svg>
+                        <span>Drag your images here to upload</span>
+                    </div>
+                    <div class="dz-previews-container" id="dzPreviews"></div>
+                </div>
+            </div>
         </div>
-
-        <div class="form-group">
-            <h3>Uploaded Files:</h3>
-            <ul>
-                @php
-                    $files = json_decode($blog->file, true);
-                @endphp
-
-                @if (!empty($files))
-                    @foreach ($files as $file)
-                        <li>
-                            <a href="{{ asset('storage/uploads/' . $file) }}" target="_blank">{{ $file }}</a>
-                        </li>
-                    @endforeach
-                @else
-                    <li>No files uploaded</li>
-                @endif
-            </ul>
-        </div>
-        
-        <input type="submit" value="อัปเดต" class="btn btn-primary my-3">
+       
+        <input id="dzSubmitButton" type="submit" value="อัปเดต" class="btn btn-primary my-3">
         <a href="/author/blog" class="btn btn-success">คำร้องทั้งหมด</a>
+        
+        <script id="dzLoadingOverlay" type="text/template">
+            <div class="dz-loading-div">
+                <div class="position-absolute w-100 h-100 start-0 top-0 d-flex align-items-center justify-content-center bg-white rounded-3 z-3">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loding...</span>
+                    </div>
+                </div>
+            </div>
+        </script>
     </form>
-    <script>
-        ClassicEditor
-            .create( document.querySelector('#content'))
-            .catch( error => {
-                console.error( error );
-            });
-    </script>  
+    <script id="dzImageTemplate" type="text/template">
+        <div class="dz-image-preview" data-id="">
+            <div class="dz-image position-relative rounded-3 overflow-hidden h-100">
+                <img class="w-100 h-100 object-fit-cover" data-dz-thumbnail>
+                <svg class="dz-remove-button m-2" type="button" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12"/><path d="M6 6l12 12"/>
+                </svg>
+            </div>
+        </div>
+    </script>
+
+    <script id="dzAdditionalTemplate" type="text/template">
+        <div class="dz-additional-area text-muted position-relative form-control d-flex align-items-center justify-content-center">
+            <svg class="dz-photo-icon opacity-75" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M15 8h.01"/><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/>
+            </svg>
+        </div>
+    </script>
+   
+    <div class="form-group">
+        <h3>Uploaded Files:</h3>
+        <ul>
+            @php
+            $files = json_decode($blog->file, true);
+        @endphp
+
+        @if (!empty($files))
+            @foreach ($files as $file)
+                <li>
+                    <a href="{{ asset('file/file/' . $file) }}" target="_blank">{{ $file }}</a>
+                    <form action="{{ route('file.delete', ['id' => $blog->id, 'file' => $file]) }}"method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">ลบ</button>
+            </form>
+                    </li>
+                @endforeach
+            @else
+                <li>No files uploaded</li>
+            @endif
+        </ul>
+    </div>
+
+     
+
+    
 @endsection
+<script>
+    var updateUrl = "{{route('update',$blog->id)}}"
+
+</script>

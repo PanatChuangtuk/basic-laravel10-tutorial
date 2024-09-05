@@ -39,7 +39,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'file',
+            'url' => env('APP_URL').'',
             'visibility' => 'public',
             'throw' => false,
         ],

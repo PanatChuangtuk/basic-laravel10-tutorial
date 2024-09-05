@@ -23,19 +23,22 @@ class AdminController extends Controller
     }
 
     function insert(Request $request){
-        $request->validate(
-            [
-                'title'=>'required|max:50',
-                'content'=>'required', 
-                'file.*' => 'required|mimes:jpg,png,pdf|max:2048'
-            ],
-            [
-                'title.required'=>'กรุณาป้อนชื่อบทความของคุณ',
-                'title.max'=>'ชื่อบทความไม่ควรเกิน 50 ตัวอักษร',
-                'content.required'=>'กรุณาป้อนเนื้อหาบทความของคุณ',
-            ]
-        );
-        $filePaths = [];
+        // $request->validate(
+        //     [
+        //         'title' => 'required|string|max:255',
+        //         'content' => 'required|string',
+        //         'file.*' => 'nullable|file|mimes:jpeg,png,pdf|max:2048',
+        //     ],
+        //     [
+        //        'title.required' => 'กรุณาป้อนชื่อบทความของคุณ',
+        //         'title.max' => 'ชื่อบทความไม่ควรเกิน 255 ตัวอักษร',
+        //         'content.required' => 'กรุณาป้อนเนื้อหาบทความของคุณ',
+        //         'file.*.required' => 'กรุณาเลือกไฟล์ที่ต้องการอัปโหลด',
+        //         'file.*.mimes' => 'ไฟล์ต้องเป็นประเภท jpeg, png หรือ pdf',
+        //         'file.*.max' => 'ขนาดไฟล์ต้องไม่เกิน 2MB',
+        //     ]
+        // );
+        $filePaths =[];
         $files = $request->file('file');
         foreach ($files  as $file) {
             $filePath = $file->store('file', 'public'); 
@@ -43,7 +46,7 @@ class AdminController extends Controller
         }
      
         $data=[
-            'title'=>$request->title,
+            'title'=>$request->input('title'),
             'content'=>strip_tags($request->input('content')),
             'file'=>json_encode($filePaths),
             'created_at' => Carbon::now()
@@ -74,40 +77,44 @@ class AdminController extends Controller
 
     function update(Request $request,$id){
         $blog = Blog::find($id);
-        $filePaths = [];
         $oldFilePaths = json_decode($blog->file, true)?: [];
-        $request->validate(
-            [
-                'title'=>'required|max:50',
-                'content'=>'required', 
-                'file.*' => 'required|mimes:jpg,png,pdf|max:2048'
-            ],
-            [
-                'title.required'=>'กรุณาป้อนชื่อบทความของคุณ',
-                'title.max'=>'ชื่อบทความไม่ควรเกิน 50 ตัวอักษร',
-                'content.required'=>'กรุณาป้อนเนื้อหาบทความของคุณ',
-                'file.required' => 'กรุณาใส่รูปภาพ'
-            ]
-        );
       
         if (is_array($oldFilePaths)) {
             foreach ($oldFilePaths as $file) {
                 Storage::disk('public')->delete('file/' . $file);
             }
         }
-        
+        if ($request->hasFile('file')) {
        foreach ($request->file('file') as $file) {
             $filePath = $file->store('file', 'public'); 
-            $filePaths[] = basename($filePath); 
-        }
+            $oldFilePaths[] = basename($filePath); 
+        }}
 
         $data=[
             'title'=>$request->title,
             'content'=>strip_tags($request->input('content')),
-            'file'=>json_encode($filePaths),
+            'file'=>json_encode($oldFilePaths ),
         ];
         $blog->update($data);
         return redirect('/author/blog');
     }
-    
+        function deleteFile(Request $request, $id, $file)
+    {
+        $blog = Blog::find($id);
+        if (!$blog) {
+            return response()->json(['error' => 'Blog not found.'], 404);
+        }
+
+        $files = json_decode($blog->file, true);
+        if (($key = array_search($file, $files)) !== false) {
+            unset($files[$key]);
+            $blog->file = json_encode(array_values($files));
+            $blog->save();
+            
+            Storage::disk('public')->delete('file/' . $file);
+
+            return redirect()->back();
+        }
+        
+}
 }

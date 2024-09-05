@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::table('blogs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('content');
-            $table->text('file')->nullable()->change();;
+            $table->text('content')->nullable()->change();
+            $table->text('file')->nullable()->change();
             $table->boolean('status')->default(true);
             $table->timestamps();
             
