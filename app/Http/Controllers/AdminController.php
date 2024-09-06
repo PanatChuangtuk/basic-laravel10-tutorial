@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Blog;
+use App\Models\File;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -18,6 +19,10 @@ class AdminController extends Controller
         $blogs=Blog::paginate(10);
         return view('blog',compact('blogs'));
     }
+    // function indexFile(){
+    //     $files=File::all();
+    //     return view('file',compact('file'));
+    // }
     function create(){
         return view('form');
     }
@@ -37,22 +42,29 @@ class AdminController extends Controller
         //         'file.*.mimes' => 'ไฟล์ต้องเป็นประเภท jpeg, png หรือ pdf',
         //         'file.*.max' => 'ขนาดไฟล์ต้องไม่เกิน 2MB',
         //     ]
-        // );
+        // );  
+        $blog = Blog::create([
+            'title' => $request->input('title'),
+            'content' => strip_tags($request->input('content')),
+            'created_at' => Carbon::now()
+        ]);
+
         $filePaths =[];
-        $files = $request->file('file');
-        foreach ($files  as $file) {
+        $files = $request->file('images');
+        foreach ($files  as $index => $file) {
             $filePath = $file->store('file', 'public'); 
             $filePaths[] = basename($filePath); 
+            File::create([
+                'blog_id' => $blog->id,
+                'images' => basename($filePath),
+                'sort'=>  $index +1,
+                'created_at' => Carbon::now()
+            ]);
         }
-     
-        $data=[
-            'title'=>$request->input('title'),
-            'content'=>strip_tags($request->input('content')),
-            'file'=>json_encode($filePaths),
-            'created_at' => Carbon::now()
-        ];
-       
-        Blog::create($data);
+
+        
+
+
         return redirect('/author/blog');
     }
 
@@ -72,49 +84,60 @@ class AdminController extends Controller
 
     function edit($id){
         $blog=Blog::find($id);
-        return view('edit',compact('blog'));
+        $file = File::where('blog_id', $blog->id)->get();
+        return view('edit',compact('blog','file'));
     }
 
     function update(Request $request,$id){
         $blog = Blog::find($id);
-        $oldFilePaths = json_decode($blog->file, true)?: [];
       
-        if (is_array($oldFilePaths)) {
-            foreach ($oldFilePaths as $file) {
-                Storage::disk('public')->delete('file/' . $file);
-            }
-        }
-        if ($request->hasFile('file')) {
-       foreach ($request->file('file') as $file) {
-            $filePath = $file->store('file', 'public'); 
-            $oldFilePaths[] = basename($filePath); 
-        }}
-
         $data=[
             'title'=>$request->title,
             'content'=>strip_tags($request->input('content')),
-            'file'=>json_encode($oldFilePaths ),
         ];
         $blog->update($data);
-        return redirect('/author/blog');
+
+        $files = File::where('blog_id', $blog->id)->get();
+  
+
+        if (is_array($files)) {
+            foreach ($files as $file) {
+                Storage::disk('public')->delete('file/' . $file);
+            }
+        }
+
+    // อัปโหลดไฟล์ใหม่
+    if ($request->hasFile('images')) {
+        foreach ($request->file('images') as $index => $file) {
+            $filePath = $file->store('file', 'public'); 
+            File::create([
+                'blog_id' => $blog->id,
+                'images' => basename($filePath),
+                'sort' => $index +1
+            ]);
+        }
     }
+        return redirect()->back();
+    }
+
         function deleteFile(Request $request, $id, $file)
     {
         $blog = Blog::find($id);
+       
         if (!$blog) {
             return response()->json(['error' => 'Blog not found.'], 404);
         }
-
-        $files = json_decode($blog->file, true);
-        if (($key = array_search($file, $files)) !== false) {
-            unset($files[$key]);
-            $blog->file = json_encode(array_values($files));
-            $blog->save();
-            
-            Storage::disk('public')->delete('file/' . $file);
-
+        
+        $files = File::where('blog_id', $blog->id) 
+        ->where('images', $file)
+        ->get();
+        foreach ($files as $fileRecord) {
+            if ($fileRecord->images === $file) {
+                $fileRecord->forceDelete();
+                // $files->delete(); soft delete
+                Storage::disk('public')->delete('file/' . $fileRecord->images);
+             
             return redirect()->back();
         }
         
-}
-}
+}}}

@@ -70,23 +70,20 @@
             </svg>
         </div>
     </script>
-   
+
     <div class="form-group">
         <h3>Uploaded Files:</h3>
         <ul>
-            @php
-            $files = json_decode($blog->file, true);
-        @endphp
-
-        @if (!empty($files))
-            @foreach ($files as $file)
-                <li>
-                    <a href="{{ asset('file/file/' . $file) }}" target="_blank">{{ $file }}</a>
-                    <form action="{{ route('file.delete', ['id' => $blog->id, 'file' => $file]) }}"method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm">ลบ</button>
-            </form>
+            @if (!$file->isEmpty())
+                @foreach ($file as $files)
+                    <li>
+                        
+                        <a href="{{ asset('file/file/' . $files->images) }}" target="_blank">{{ $files->images }}</a>
+                        <form action="{{ route('file.delete', ['blog_id' => $blog->id, 'file' => $files->images]) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">ลบ</button>
+                        </form>
                     </li>
                 @endforeach
             @else

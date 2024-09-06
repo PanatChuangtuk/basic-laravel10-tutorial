@@ -30,7 +30,7 @@ $(document).ready(function () {
                 .getAttribute("content"),
         },
         url: "/author/insert",
-        paramName: "file",
+        paramName: "images",
         autoProcessQueue: false,
         uploadMultiple: true,
         parallelUploads: 5,
@@ -172,7 +172,6 @@ $(document).ready(function () {
         change: function (event, ui) {
             var isPlaceholderFirst = ui.placeholder.index() === 0;
 
-            // show the first cover image's placeholder if dragged into it
             if (isPlaceholderFirst) {
                 ui.placeholder.addClass("cover-placeholder");
             } else {
@@ -285,7 +284,7 @@ window.onload = function () {
                 .getAttribute("content"),
         },
         url: updateUrl,
-        paramName: "file",
+        paramName: "images",
         method: "POST",
         autoProcessQueue: false,
         uploadMultiple: true,
@@ -411,7 +410,7 @@ window.onload = function () {
             alert("Title and Content are required.");
         } else if (myDropzoneUploads.getQueuedFiles().length > 0) {
             myDropzoneUploads.processQueue();
-            window.location.reload();
+            // window.location.reload();
         }
     });
 };

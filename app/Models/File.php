@@ -5,22 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-class Blog extends Model
+class File extends Model
 {
     use HasFactory,SoftDeletes;
-    
-    protected $fillable=[
-        'title',
-        'content',
-        'status',
-      
-    ];
+    protected $fillable = ['images', 'sort','blog_id'];
     protected $dates = ['deleted_at'];
-    
-    public function files()
+   
+    public function blog()
     {
-        return $this->hasMany(File::class);
+        return $this->belongsTo(Blog::class);
     }
 }
-
-?>
