@@ -19,10 +19,7 @@ class AdminController extends Controller
         $blogs=Blog::paginate(10);
         return view('blog',compact('blogs'));
     }
-    // function indexFile(){
-    //     $files=File::all();
-    //     return view('file',compact('file'));
-    // }
+  
     function create(){
         return view('form');
     }

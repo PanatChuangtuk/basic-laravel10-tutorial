@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Blog;
-
+use App\Models\File;
 class BlogController extends Controller
 {
     function index(){
@@ -13,7 +13,8 @@ class BlogController extends Controller
     }
     function detail($id){
         $blog=Blog::find($id);
-        return view('detail',compact('blog'));
+        $file = File::where('blog_id', $blog->id)->get();
+        return view('detail',compact('blog','file'));
     }
 }
 

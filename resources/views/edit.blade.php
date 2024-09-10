@@ -38,7 +38,7 @@
             </div>
         </div>
        
-        <input id="dzSubmitButton" type="submit" value="อัปเดต" class="btn btn-primary my-3">
+        <button id="dzSubmitButton" type="submit" value="อัปเดต" class="btn btn-primary my-3">
         <a href="/author/blog" class="btn btn-success">คำร้องทั้งหมด</a>
         
         <script id="dzLoadingOverlay" type="text/template">
@@ -78,7 +78,7 @@
                 @foreach ($file as $files)
                     <li>
                         
-                        <a href="{{ asset('file/file/' . $files->images) }}" target="_blank">{{ $files->images }}</a>
+                        <a class="text-limit"  href="{{ asset('file/file/' . $files->images) }}" target="_blank">{{ $files->images }}</a>
                         <form action="{{ route('file.delete', ['blog_id' => $blog->id, 'file' => $files->images]) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
@@ -92,11 +92,9 @@
         </ul>
     </div>
 
-     
-
-    
 @endsection
 <script>
     var updateUrl = "{{route('update',$blog->id)}}"
 
 </script>
+
