@@ -3,7 +3,7 @@
 @section('content')
     <h2 class="text text-center py-2">สร้างคำร้อง</h2>
 
-    <form id="dzImageUploadForm" method="POST" action="/author/insert" enctype="multipart/form-data">
+    <form id="dzDropzone" method="POST" action="/author/insert" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="title">ชื่อคำร้อง</label>
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <input   id="dzSubmitButton" type="submit" value="บันทึก" class="btn btn-primary my-3">
+        <input  id="submit"type="submit" value="บันทึก" class="btn btn-primary my-3">
         <a href="/author/blog" class="btn btn-success">คำร้องทั้งหมด</a>
    
     </form>

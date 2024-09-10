@@ -1,10 +1,6 @@
-import { ClassicEditor, Font, FontFamily, Clipboard } from "ckeditor5";
-import { SlashCommand } from "ckeditor5-premium-features";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
 
-ClassicEditor.create(document.querySelector("#content"))
-    .then((editor) => {
-        console.log("Editor is ready!", editor);
-    })
-    .catch((error) => {
-        console.error("Error:", error);
-    });
+ClassicEditor.create(document.querySelector("#content")).catch((error) => {
+    console.error(error);
+});

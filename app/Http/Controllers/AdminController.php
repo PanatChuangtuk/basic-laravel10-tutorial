@@ -39,15 +39,17 @@ class AdminController extends Controller
         //         'file.*.mimes' => 'ไฟล์ต้องเป็นประเภท jpeg, png หรือ pdf',
         //         'file.*.max' => 'ขนาดไฟล์ต้องไม่เกิน 2MB',
         //     ]
-        // );  
+        // );
+      
         $blog = Blog::create([
             'title' => $request->input('title'),
             'content' => strip_tags($request->input('content')),
             'created_at' => Carbon::now()
         ]);
-
+       
         $filePaths =[];
         $files = $request->file('images');
+
         foreach ($files  as $index => $file) {
             $filePath = $file->store('file', 'public'); 
             $filePaths[] = basename($filePath); 
@@ -58,13 +60,10 @@ class AdminController extends Controller
                 'created_at' => Carbon::now()
             ]);
         }
-
-        
-
-
         return redirect('/author/blog');
     }
 
+    
     function delete($id){
         Blog::find($id)->delete();
         return redirect()->back();
@@ -124,7 +123,6 @@ class AdminController extends Controller
         if (!$blog) {
             return response()->json(['error' => 'Blog not found.'], 404);
         }
-        
         $files = File::where('blog_id', $blog->id) 
         ->where('images', $file)
         ->get();
