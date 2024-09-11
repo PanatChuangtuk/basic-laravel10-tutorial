@@ -41,7 +41,6 @@ class AdminController extends Controller
         //     ]
         // );
   
-       
         $blog = Blog::create([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
@@ -94,14 +93,11 @@ class AdminController extends Controller
       
         $blog->update($data);
         $files = File::where('blog_id', $blog->id)->get();
-  
-
         if (is_array($files)) {
             foreach ($files as $file) {
                 Storage::disk('public')->delete('file/' . $file);
             }
         }
-
     // อัปโหลดไฟล์ใหม่
     if ($request->hasFile('images')) {
         foreach ($request->file('images') as $index => $file) {

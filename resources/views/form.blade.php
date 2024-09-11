@@ -42,9 +42,12 @@
             </div>
         </div>
 
-        <input id="submitF" type="submit" value="บันทึก" class="btn btn-primary my-3">
-        <a href="/author/blog" class="btn btn-success">คำร้องทั้งหมด</a>
-   
+        <div class="container">
+            <div class="button-group">
+                <button id="submitF" type="submit" class="btn btn-custom">บันทึก</button>
+                <a href="/author/blog" class="btn btn-success">คำร้องทั้งหมด</a>
+            </div>
+        </div>
     </form>
 
     <script id="dzLoadingOverlay" type="text/template">

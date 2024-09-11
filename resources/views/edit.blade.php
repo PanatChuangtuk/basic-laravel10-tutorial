@@ -37,10 +37,14 @@
                 </div>
             </div>
         </div>
-       
-        <input id="uploads" type="submit" value="อัปเดต" class="btn btn-primary my-3">
-        <a href="/author/blog" class="btn btn-success">คำร้องทั้งหมด</a>
-        
+
+        <div class="container">
+            <div class="button-group">
+                <button id="uploads" type="submit" class="btn btn-primary">อัปเดต</button>
+                <a href="/author/blog" class="btn btn-success">คำร้องทั้งหมด</a>
+            </div>
+        </div>
+</form>
         <script id="dzLoadingOverlay" type="text/template">
             <div class="dz-loading-div">
                 <div class="position-absolute w-100 h-100 start-0 top-0 d-flex align-items-center justify-content-center bg-white rounded-3 z-3">
@@ -50,7 +54,7 @@
                 </div>
             </div>
         </script>
-    </form>
+  
     <script id="dzImageTemplate" type="text/template">
         <div class="dz-image-preview" data-id="">
             <div class="dz-image position-relative rounded-3 overflow-hidden h-100">
@@ -97,6 +101,7 @@
         .create(document.querySelector('#content'))
         .then(editor => {
             window.editor = editor; 
+            // this.submit();
         })
         .catch(error => {
             console.error(error);

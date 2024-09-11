@@ -48,6 +48,8 @@ $(document).ready(function () {
     myDropzone.on("sendingmultiple", function (file, xhr, formData) {
         const loadingDiv = $("#dzLoadingOverlay").html();
         $("#dzDropzone").append(loadingDiv);
+        formData.append("title", $("#title").val());
+        window.editor.updateSourceElement();
     });
 
     function updateAdditionalAreasDropzone() {
@@ -138,7 +140,7 @@ $(document).ready(function () {
     );
     $("#submitF").on("click", function (event) {
         event.preventDefault();
-        window.editor.updateSourceElement();
+
         myDropzone.processQueue();
         window.location.href = "/author/blog";
     });
@@ -186,6 +188,8 @@ window.onload = function () {
     myDropzoneUploads.on("sendingmultiple", function (file, xhr, formData) {
         const loadingDiv = $("#dzLoadingOverlay").html();
         $("#dzDropzoneUploads").append(loadingDiv);
+        formData.append("title", $("#title").val());
+        window.editor.updateSourceElement();
     });
 
     function updateAdditionalAreasUploads() {
@@ -269,9 +273,9 @@ window.onload = function () {
     );
 
     $("#uploads").on("click", function (event) {
-        event.preventDefault();
+        // event.preventDefault();
         myDropzoneUploads.processQueue();
-        window.editor.updateSourceElement();
+
         // window.location.reload();
     });
 };

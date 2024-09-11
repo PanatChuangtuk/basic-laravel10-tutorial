@@ -11,7 +11,9 @@
 
 $coverImageHeight: 350px;
 $additionalImageHeight: 220px;
-
+$btn-bg-color: #007bff;
+$btn-bg-hover-color: #0056b3;
+$btn-text-color: #fff;
 // Page styles ------------------------------------------------
 
 body {
@@ -158,4 +160,18 @@ h1 {
         white-space: nowrap;
         z-index: 100;
     }
+}
+.button-group {
+    display: flex;
+    gap: 10px; // ระยะห่างระหว่างปุ่ม
+    margin: 20px 0; // ระยะห่างด้านบนและล่าง
+}
+.btn-custom {
+    background-color: $btn-bg-color; // สีพื้นหลัง
+    border: none; // ลบเส้นขอบ
+    color: $btn-text-color; // สีตัวอักษร
+    &:hover {
+        background-color: $btn-bg-hover-color; // สีพื้นหลังเมื่อชี้เมาส์
+        color: $btn-text-color;
+    } // สีตัวอักษรเมื่อชี้เมาส์
 }
