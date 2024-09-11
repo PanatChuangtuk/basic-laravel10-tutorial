@@ -18,7 +18,8 @@
 
         <div class="form-group">
             <label for="content">เนื้อหาคำร้อง</label>
-            <textarea name="content" id="content"></textarea>
+            <textarea name="content" cols="30" rows="5" id="content"></textarea>
+
         </div>
 
         @error('content')
@@ -29,7 +30,7 @@
 
         <div class="position-relative">
             <div class="form-group mb-3">
-                <div class="main-drag-area form-control p-0" id="dzDropzone" >
+                <div class="main-drag-area form-control p-0"  >
                     <div class="dz-message rounded-3 text-muted opacity-75" id="dzPlaceholder">
                         <svg class="opacity-50 mb-3" width="50px" height="50px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
                             <!-- SVG Path -->
@@ -41,7 +42,7 @@
             </div>
         </div>
 
-        <input  id="submit"type="submit" value="บันทึก" class="btn btn-primary my-3">
+        <input id="submitF" type="submit" value="บันทึก" class="btn btn-primary my-3">
         <a href="/author/blog" class="btn btn-success">คำร้องทั้งหมด</a>
    
     </form>
@@ -75,11 +76,19 @@
             </svg>
         </div>
     </script>
-     <script>
-        ClassicEditor
-            .create( document.querySelector( '#content' ) )
-            .catch( error => {
-                console.error( error );
-            } );
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    ClassicEditor
+        .create(document.querySelector('#content'))
+        .then(editor => {
+            window.editor = editor; 
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    });
     </script>
+
 @endsection
+   

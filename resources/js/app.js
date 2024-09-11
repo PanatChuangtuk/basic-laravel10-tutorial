@@ -47,7 +47,6 @@ $(document).ready(function () {
 
     myDropzone.on("sendingmultiple", function (file, xhr, formData) {
         const loadingDiv = $("#dzLoadingOverlay").html();
-
         $("#dzDropzone").append(loadingDiv);
     });
 
@@ -72,8 +71,6 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".dz-remove-button", function (event) {
-        event.stopPropagation();
-
         const filePreview = $(this).closest(".dz-image-preview");
         const tempId = filePreview.data("id");
         const fileToRemove = myDropzone.file.find(function (file) {
@@ -139,25 +136,11 @@ $(document).ready(function () {
             return false;
         }
     );
-
-    myDropzone.on("successmultiple", function (response) {
-        const successMessage = $("#dzSuccessMessage").html();
-        window.location.href = "/author/blog";
-        myDropzone.removeAllFiles();
-        $("#dzImageUploadForm").fadeOut(500);
-        setTimeout(function () {
-            $(".dz-loading-div").fadeOut();
-            $(successMessage).insertBefore("#dzImageUploadForm").slideDown();
-        }, 500);
-        setTimeout(function () {
-            $("#uploadedImagesSection").slideDown();
-        }, 600);
-    });
-
-    $("#submit").on("click", function (event) {
-        event.preventDefault(); // Stop the default action
-        event.stopPropagation();
+    $("#submitF").on("click", function (event) {
+        event.preventDefault();
+        window.editor.updateSourceElement();
         myDropzone.processQueue();
+        window.location.href = "/author/blog";
     });
 });
 
@@ -285,8 +268,10 @@ window.onload = function () {
         }
     );
 
-    $("#submit").on("click", function (event) {
+    $("#uploads").on("click", function (event) {
+        event.preventDefault();
         myDropzoneUploads.processQueue();
+        window.editor.updateSourceElement();
         // window.location.reload();
     });
 };

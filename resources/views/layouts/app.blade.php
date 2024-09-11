@@ -21,10 +21,8 @@
     </style>
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js','resources/js/ckeditor5.js'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
-     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.1.0/ckeditor5.css" />
-    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5-premium-features/43.1.0/ckeditor5-premium-features.css" />
     
 
 </head>

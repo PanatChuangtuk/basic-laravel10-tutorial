@@ -3,7 +3,7 @@
 @section('content')
 
     <h2 class="text text-center py-2">แก้ไขคำร้อง</h2>
-    <form id="dzImageUploadForms" method="POST" action="{{route('update',$blog->id)}}"enctype="multipart/form-data">
+    <form id="dzDropzoneUploads" method="POST" action="{{route('update',$blog->id)}}"enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="title">ชื่อคำร้อง</label>
@@ -16,7 +16,7 @@
         @enderror
         <div class="form-group">
             <label for="content">เนื้อหาคำร้อง</label>
-            <textarea name="content"  cols="30" rows="5" class="form-control" id="content">{{$blog->content}}</textarea>
+            <textarea name="content" cols="30" rows="5" class="form-control" id="content">{{$blog->content}}</textarea>
         </div>
         @error('content')
             <div class="my-2">
@@ -26,7 +26,7 @@
         
         <div class="position-relative">
             <div class="form-group mb-3">
-                <div class="main-drag-area form-control p-0" id="dzDropzoneUploads" >
+                <div class="main-drag-area form-control p-0" >
                     <div class="dz-message rounded-3 text-muted opacity-75" id="dzPlaceholder">
                         <svg class="opacity-50 mb-3" width="50px" height="50px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
                             <!-- SVG Path -->
@@ -38,7 +38,7 @@
             </div>
         </div>
        
-        <button id="dzSubmitButton" type="submit" value="อัปเดต" class="btn btn-primary my-3">
+        <input id="uploads" type="submit" value="อัปเดต" class="btn btn-primary my-3">
         <a href="/author/blog" class="btn btn-success">คำร้องทั้งหมด</a>
         
         <script id="dzLoadingOverlay" type="text/template">
@@ -91,7 +91,18 @@
             @endif
         </ul>
     </div>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    ClassicEditor
+        .create(document.querySelector('#content'))
+        .then(editor => {
+            window.editor = editor; 
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    });
+    </script>
 @endsection
 <script>
     var updateUrl = "{{route('update',$blog->id)}}"

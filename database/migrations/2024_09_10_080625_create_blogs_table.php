@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('blogs', function (Blueprint $table) {
-            $table->id();
+        Schema::create('blogs', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('title');
-            $table->text('content')->nullable()->change();
-            $table->text('file')->nullable()->change();
-            $table->boolean('status')->default(true);
+            $table->text('content')->nullable();
+            $table->text('description')->nullable();
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
-            
         });
+    
     }
 
     /**

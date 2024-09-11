@@ -6,9 +6,7 @@
     @foreach ($blogs as $item)
         <h2>{{$item->title}}</h2>
         <hr>
-        @php
-            dd($file);
-        @endphp
+       
         {{-- @foreach($file as $image)
             <img src="{{ asset('file/file/' . $image->images) }}" alt="Image" />
         @endforeach --}}

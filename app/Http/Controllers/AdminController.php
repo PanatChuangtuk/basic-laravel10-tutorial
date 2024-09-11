@@ -26,11 +26,11 @@ class AdminController extends Controller
 
     function insert(Request $request){
         // $request->validate(
-        //     [
-        //         'title' => 'required|string|max:255',
-        //         'content' => 'required|string',
+            // [
+                // 'title' => 'required',
+                // 'content' => 'required',
         //         'file.*' => 'nullable|file|mimes:jpeg,png,pdf|max:2048',
-        //     ],
+            // ],
         //     [
         //        'title.required' => 'กรุณาป้อนชื่อบทความของคุณ',
         //         'title.max' => 'ชื่อบทความไม่ควรเกิน 255 ตัวอักษร',
@@ -40,16 +40,17 @@ class AdminController extends Controller
         //         'file.*.max' => 'ขนาดไฟล์ต้องไม่เกิน 2MB',
         //     ]
         // );
-      
+  
+       
         $blog = Blog::create([
             'title' => $request->input('title'),
-            'content' => strip_tags($request->input('content')),
+            'content' => $request->input('content'),
             'created_at' => Carbon::now()
+
         ]);
-       
+    
         $filePaths =[];
         $files = $request->file('images');
-
         foreach ($files  as $index => $file) {
             $filePath = $file->store('file', 'public'); 
             $filePaths[] = basename($filePath); 
@@ -60,7 +61,7 @@ class AdminController extends Controller
                 'created_at' => Carbon::now()
             ]);
         }
-        return redirect('/author/blog');
+        return ;
     }
 
     
@@ -86,13 +87,12 @@ class AdminController extends Controller
 
     function update(Request $request,$id){
         $blog = Blog::find($id);
-      
         $data=[
-            'title'=>$request->title,
-            'content'=>strip_tags($request->input('content')),
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
         ];
+      
         $blog->update($data);
-
         $files = File::where('blog_id', $blog->id)->get();
   
 
