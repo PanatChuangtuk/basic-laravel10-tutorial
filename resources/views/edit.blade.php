@@ -95,19 +95,6 @@
             @endif
         </ul>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-    ClassicEditor
-        .create(document.querySelector('#content'))
-        .then(editor => {
-            window.editor = editor; 
-            // this.submit();
-        })
-        .catch(error => {
-            console.error(error);
-        });
-    });
-    </script>
 @endsection
 <script>
     var updateUrl = "{{route('update',$blog->id)}}"

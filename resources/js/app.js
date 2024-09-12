@@ -140,7 +140,6 @@ $(document).ready(function () {
     );
     $("#submitF").on("click", function (event) {
         event.preventDefault();
-
         myDropzone.processQueue();
         window.location.href = "/author/blog";
     });
@@ -279,3 +278,13 @@ window.onload = function () {
         // window.location.reload();
     });
 };
+
+document.addEventListener("DOMContentLoaded", function () {
+    ClassicEditor.create(document.querySelector("#content"))
+        .then((editor) => {
+            window.editor = editor;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+});

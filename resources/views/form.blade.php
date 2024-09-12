@@ -80,18 +80,7 @@
         </div>
     </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-    ClassicEditor
-        .create(document.querySelector('#content'))
-        .then(editor => {
-            window.editor = editor; 
-        })
-        .catch(error => {
-            console.error(error);
-        });
-    });
-    </script>
+   
 
 @endsection
    
