@@ -8,7 +8,7 @@ use App\Models\File;
 class BlogController extends Controller
 {
     function index(){
-        $blogs=Blog::orderByDesc('id')->where('status',true)->get();
+        $blogs=Blog::orderByDesc('id')->where('status',true)->paginate();
         return view('welcome',compact('blogs'));
     }
     function detail($id){

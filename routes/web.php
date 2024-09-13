@@ -3,11 +3,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BlogController;
-//นักอ่าน
+
 Route::get('/',[BlogController::class,'index']);
 Route::get('/detail/{id}',[BlogController::class,'detail']);
 
-//นักเขียน
+
 Route::prefix('author')->group(function(){
     Route::get('/blog',[AdminController::class,'index'])->name('blog');
     Route::get('/create',[AdminController::class,'create']);

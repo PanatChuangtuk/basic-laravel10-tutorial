@@ -10,8 +10,9 @@
         "axios": "^1.1.2",
         "bootstrap": "^5.3.3",
         "laravel-vite-plugin": "^0.8.0",
+        "prettier": "^3.0.0-alpha.6",
         "sass": "^1.78.0",
-        "vite": "^4.0.0"
+        "vite": "^4.5.3"
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^43.1.0",

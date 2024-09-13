@@ -5,16 +5,17 @@
     <h2 class="text text-center py-2">สถานะของคำร้องทั้งหมด</h2>
     <table class="table table-bordered text-center">
         <thead>
-            <tr>
+            <th><input type="checkbox">
                 <th scope="col">ชื่อคำร้อง</th>
                 <th scope="col">สถานะคำร้อง</th>
                 <th scope="col">แก้ไขคำร้อง</th>
                 <th scope="col">ลบคำร้อง</th>
-            </tr>
+            </th>
         </thead>
         <tbody>
             @foreach ($blogs as $item)
                 <tr>
+                    <td><input type="checkbox" name="id" class="checkboxes" value="{{$item->id}}" /></td>
                     <td>{{$item->title}}</td>
                     <td>
                         @if ($item->status==true)

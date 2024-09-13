@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('blog_id')->nullable();
             $table->foreign('blog_id')->references('id')->on('blogs')->onDelete('SET NULL'); 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

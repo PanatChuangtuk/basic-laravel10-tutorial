@@ -119,7 +119,7 @@ $(document).ready(function () {
             $(".dz-image-preview").each(function () {
                 const fileId = $(this).data("id");
                 const file = myDropzone.files.find(
-                    (file) => file.tempId === fileId
+                    (file) => file.tempId === fileId,
                 );
 
                 if (file) {
@@ -136,7 +136,7 @@ $(document).ready(function () {
         ".dz-image-preview:first-child",
         function (event) {
             return false;
-        }
+        },
     );
     $("#submitF").on("click", function (event) {
         event.preventDefault();
@@ -215,7 +215,7 @@ window.onload = function () {
         const filePreview = $(this).closest(".dz-image-preview");
         const tempId = filePreview.data("id");
         const fileToRemove = myDropzoneUploads.files.find(
-            (file) => file.tempId === tempId
+            (file) => file.tempId === tempId,
         );
         if (fileToRemove) {
             myDropzoneUploads.removeFile(fileToRemove);
@@ -253,7 +253,7 @@ window.onload = function () {
             $(".dz-image-preview").each(function () {
                 const fileId = $(this).data("id");
                 const file = myDropzoneUploads.files.find(
-                    (file) => file.tempId === fileId
+                    (file) => file.tempId === fileId,
                 );
                 if (file) {
                     sortedFiles.push(file);
@@ -268,7 +268,7 @@ window.onload = function () {
         ".dz-image-preview:first-child",
         function (event) {
             return false;
-        }
+        },
     );
 
     $("#uploads").on("click", function (event) {

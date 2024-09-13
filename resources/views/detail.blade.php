@@ -8,6 +8,6 @@
     {!!$blog->content!!}
     <hr>
     @foreach($file as $image)
-        <img src="{{ asset('file/file/' . $image->images) }}" alt="Image" />
+        <img class="w-100 h-100 object-fit-cover" src="{{ asset('file/file/' . $image->images) }}" alt="Image" />
     @endforeach
 @endsection
