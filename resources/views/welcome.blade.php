@@ -14,5 +14,7 @@
         <a href="/detail/{{$item->id}}">อ่านเพิ่มเติม</a>
         <hr>
     @endforeach
-    
+
+    {{$blogs->links()}} 
 @endsection
+
