@@ -25,28 +25,28 @@ class AdminController extends Controller
     }
 
     function insert(Request $request){
-        // $request->validate(
-            // [
-                // 'title' => 'required',
-                // 'content' => 'required',
+        $request->validate(
+            [
+                'title' => 'required',
+                'content' => 'required',
         //         'file.*' => 'nullable|file|mimes:jpeg,png,pdf|max:2048',
-            // ],
-        //     [
-        //        'title.required' => 'กรุณาป้อนชื่อบทความของคุณ',
-        //         'title.max' => 'ชื่อบทความไม่ควรเกิน 255 ตัวอักษร',
-        //         'content.required' => 'กรุณาป้อนเนื้อหาบทความของคุณ',
+            ],
+            [
+               'title.required' => 'กรุณาป้อนชื่อบทความของคุณ',
+                'title.max' => 'ชื่อบทความไม่ควรเกิน 255 ตัวอักษร',
+                'content.required' => 'กรุณาป้อนเนื้อหาบทความของคุณ',
         //         'file.*.required' => 'กรุณาเลือกไฟล์ที่ต้องการอัปโหลด',
         //         'file.*.mimes' => 'ไฟล์ต้องเป็นประเภท jpeg, png หรือ pdf',
         //         'file.*.max' => 'ขนาดไฟล์ต้องไม่เกิน 2MB',
-        //     ]
-        // );
-  
-        $blog = Blog::create([
-            'title' => $request->input('title'),
-            'content' => $request->input('content'),
-            'created_at' => Carbon::now()
-
-        ]);
+            ]
+        );
+  $data = [
+    'title' => $request->title,
+    'content' => $request->content,
+    'created_at' => Carbon::now()
+  ];
+  dd( $data);
+        $blog = Blog::create($data);
     
         $filePaths =[];
         $files = $request->file('images');
